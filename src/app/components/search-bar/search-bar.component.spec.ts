@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
+import {  NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { SearchBarComponent } from './search-bar.component';
 
@@ -14,9 +14,7 @@ describe('SearchBarComponent', () => {
       imports: [FormsModule, ReactiveFormsModule],
       schemas: [NO_ERRORS_SCHEMA], // Ignore unknown elements and attributes
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(SearchBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -33,7 +31,7 @@ describe('SearchBarComponent', () => {
 
     component.performSearch();
 
-    expect(component.searchChanged.emit).toHaveBeenCalledWith(searchTerm);
+    expect(component.searchChanged.emit).toHaveBeenCalledOnceWith(searchTerm);
   });
 
   it('should not emit search term when performSearch is called with an empty searchFormControl', () => {
@@ -42,7 +40,7 @@ describe('SearchBarComponent', () => {
 
     component.performSearch();
 
-    expect(component.searchChanged.emit).not.toHaveBeenCalled();
+    expect(component.searchChanged.emit).not.toHaveBeenCalledTimes(1);
   });
 
   it('should trim search term before emitting', () => {
@@ -53,7 +51,7 @@ describe('SearchBarComponent', () => {
 
     component.performSearch();
 
-    expect(component.searchChanged.emit).toHaveBeenCalledWith(trimmedSearchTerm);
+    expect(component.searchChanged.emit).toHaveBeenCalledOnceWith(trimmedSearchTerm);
   });
 
   it('should render input element', () => {

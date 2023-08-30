@@ -31,7 +31,7 @@
 .user-controls {
   align-items: center;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .spinner-container {
@@ -44,5 +44,10 @@
   .responsive-card {
     flex: 100%;
     max-width: 100%;
+  }
+
+  .user-controls {
+    flex-direction: column;
+    align-items: center;
   }
 }
