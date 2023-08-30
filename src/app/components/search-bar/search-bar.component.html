@@ -1,0 +1,14 @@
+<div class="user-search">
+  <mat-form-field class="search-input">
+    <mat-label>Search Users</mat-label>
+    <div class="input-container">
+      <input matInput [formControl]="searchFormControl" placeholder="Enter search term">
+      <button [disabled]="searchFormControl.invalid" mat-icon-button color="primary" class="search-button" (click)="performSearch()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+    <mat-error *ngIf="searchFormControl.invalid">
+      Please enter a valid search term.
+    </mat-error>
+  </mat-form-field>
+</div>

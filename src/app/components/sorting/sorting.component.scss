@@ -1,0 +1,18 @@
+.user-sorting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.sorting-container {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.sorting-icon {
+  cursor: pointer;
+  padding-left: 8px;
+}
+

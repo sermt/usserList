@@ -1,0 +1,48 @@
+.card-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.error {
+  font-size: 28px;
+}
+
+.responsive-card {
+  box-sizing: border-box;
+  flex: calc(50% - 0.5rem);
+  margin-bottom: 1rem;
+  max-width: calc(50% - 0.5rem);
+  padding: 1rem;
+}
+
+
+.title {
+  font-size: 50px;
+  margin: 10px;
+}
+
+.user-controls {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .responsive-card {
+    flex: 100%;
+    max-width: 100%;
+  }
+}

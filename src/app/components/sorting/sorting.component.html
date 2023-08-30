@@ -1,0 +1,14 @@
+<mat-form-field class="user-sorting" floatLabel="always">
+  <mat-label>Sort by:</mat-label>
+  <div class="sorting-container">
+    <mat-select [formControl]="sortingByControl">
+      <mat-option *ngFor="let sortMethod of sortingKeys" [value]="sortMethod">
+        {{ sortMethod | titlecase }}
+      </mat-option>
+    </mat-select>
+    <mat-icon class="sorting-icon" (click)="toggleSortOrder()">
+      {{ sortOrder === orderBy.Ascending ? 'arrow_upward' : 'arrow_downward' }}
+    </mat-icon>
+  </div>
+</mat-form-field>
+
