@@ -6,7 +6,6 @@ import {
 import { UserService } from './user.service';
 import { Filter, Order, UserResponse, UserError, Sort } from './types';
 import { User } from '../models/user.model';
-import { Observer } from 'rxjs';
 
 const mockUsers: User[] = [
   { id: 1, name: 'Joan Doe', email: 'joanDoe@example.com', avatar: '' },
@@ -36,43 +35,43 @@ describe('UserService', () => {
     expect(userService).toBeTruthy();
   });
 
-  it('should get users without search term and params', () => {
+  it('should get users without search term and params', (done) => {
     userService.getUsers().subscribe((response: UserResponse) => {
       expect(response.users).toEqual(mockUsers);
+      done();
     });
 
     const req = httpMock.expectOne('../../assets/db.json');
     req.flush({ users: mockUsers });
   });
 
-  it('should filter users by name', () => {
+  it('should filter users by name', (done) => {
     userService.getUsers('Will Smith').subscribe((response: UserResponse) => {
       expect(response.users[0].name).toBe('Will Smith');
+      done();
     });
 
     const req = httpMock.expectOne('../../assets/db.json');
     req.flush({ users: mockUsers });
   });
 
-  it('should throw error when no users found', () => {
-    const observer: Observer<UserResponse> = {
-      next: (response: UserResponse) =>
-        fail('should have failed with the not found error'),
-      error: (error: Error) => {
+  it('should throw error when no users found', (done) => {
+    userService.getUsers('Unknown').subscribe(
+      () => {
+        fail('should have failed with the not found error');
+        done();
+      },
+      (error: Error) => {
         expect(error).toEqual(new Error(UserError.NotFound));
-      },
-      complete: () => {
-
-      },
-    };
-
-    userService.getUsers('Unknown').subscribe(observer);
+        done();
+      }
+    );
 
     const req = httpMock.expectOne('../../assets/db.json');
     req.flush({ users: mockUsers });
   });
 
-  it('should filter and sort users', () => {
+  it('should filter and sort users', (done) => {
     const searchTerm = 'd';
     const params = {
       filter: Filter.Name,
@@ -80,12 +79,11 @@ describe('UserService', () => {
       orderBy: Order.Ascending,
     };
 
-    userService
-      .getUsers(searchTerm, params)
-      .subscribe((response: UserResponse) => {
-        expect(response.users[0].name).toBe('Ana Diaz');
-        expect(response.users[1].name).toBe('Joan Doe');
-      });
+    userService.getUsers(searchTerm, params).subscribe((response: UserResponse) => {
+      expect(response.users[0].name).toBe('Ana Diaz');
+      expect(response.users[1].name).toBe('Joan Doe');
+      done();
+    });
 
     const req = httpMock.expectOne('../../assets/db.json');
     req.flush({ users: mockUsers });
