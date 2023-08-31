@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Subscription, catchError, map } from 'rxjs'; // Importa switchMap
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription, catchError, map } from 'rxjs';
 import { User } from './models/user.model';
 import { UserService } from './services/user.service';
 import { Filter, Order, Params, Sort, UserError } from './services/types';
@@ -9,7 +9,7 @@ import { Filter, Order, Params, Sort, UserError } from './services/types';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   private subscription: Subscription;
   private activeFilter: Filter | undefined;
   private orderBy: Order | undefined;
@@ -70,6 +70,7 @@ export class AppComponent {
   onFilter(filter: Filter): void {
     this.activeFilter = filter;
   }
+
   onSorting(sorting: Partial<Params>): void {
     this.sortBy = sorting.sortBy;
     this.orderBy = sorting.orderBy;
@@ -77,5 +78,11 @@ export class AppComponent {
 
   isLoading(): boolean {
     return this.userService.isLoading();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
